@@ -1,1 +1,15 @@
-README.md
+- [] Name: BitSpace
+- [] Ticker: BSX
+- [] Algo: Nist5
+- [] Nist5: Only Gpu mineable (no asics)
+- [] POW/POS Hybrid
+- [] POW last block  450 010
+- [] Block time: 60 seconds (1 minute)
+- [] POW block reward 100 BSX coins per block
+- [] Block maturity 20 blocks
+- [] POS starts from 1st block
+- [] POS 10% Interest per year
+- [] Min. stake age 24 hours - Max. unlimited
+- [] BitSpace coin daemon (https://bit-space.io/bsx-coin-deamon/)
+- [] Bitcointalk thread (https://bitcointalk.org/index.php?topic=3012857.0) 
+- [] BSX market (https://graviex.net/markets/bsxbtc)

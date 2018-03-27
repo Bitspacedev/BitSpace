@@ -969,6 +969,7 @@ int64_t GetProofOfWorkReward(int64_t nFees)
 
     int64_t nSubsidy = 0 * COIN;
 
+
     if(pindexBest->nHeight+1 >= 1 && pindexBest->nHeight+1 <= 5)
   {
   nSubsidy = 1000000 * COIN;
@@ -981,6 +982,10 @@ int64_t GetProofOfWorkReward(int64_t nFees)
   {
   nSubsidy = 100 * COIN;
   }
+  
+    // block reward 50 from block 120000 onward
+  	if(pindexBest->nHeight+1 > 120000)
+		nSubsidy = 50 * COIN;
 
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
@@ -994,6 +999,10 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
     int64_t nRewardCoinYear;
 
     nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
+	
+	// increase to 50% for blocks 120000-1000000
+	if(pindexBest->nHeight+1 > 120000 && pindexBest->nHeight+1 < 1000000)
+		nRewardCoinYear = 50 * CENT;
 
     int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 
