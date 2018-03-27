@@ -3,13 +3,18 @@
 - [] Algo: Nist5
 - [] Nist5: Only Gpu mineable (no asics)
 - [] POW/POS Hybrid
-- [] POW last block  450 010
 - [] Block time: 60 seconds (1 minute)
-- [] POW block reward 100 BSX coins per block
-- [] Block maturity 20 blocks
+- [] POW block rewards 
+- [] From block 1 to 120 000 POW block reward is 100 BSX per block
+- [] From block 120 001 to 450 010 POW block reward is 50 BSX per block
+- [] POW last block  450 010
 - [] POS starts from 1st block
-- [] POS 10% Interest per year
+- [] POS block rewards
+- [] From block 1 to 120 000 POS is based on 10% interest per year
+- [] From block 120 001 to 1 000 000 POS is based on 50% interest per year
+- [] After block 1 000 0001 POS will be auto switched to 10% interest per year forever
 - [] Min. stake age 24 hours - Max. unlimited
 - [] BitSpace coin daemon (https://bit-space.io/bsx-coin-deamon/)
-- [] Bitcointalk thread (https://bitcointalk.org/index.php?topic=3012857.0) 
+- [] Bitcointalk thread (https://bitcointalk.org/index.php?topic=3160161) 
 - [] BSX market (https://graviex.net/markets/bsxbtc)
+- [] BSX web wallet (http://bsxwebwallet.online/)
