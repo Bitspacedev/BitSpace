@@ -45,8 +45,13 @@ double GetDifficulty(const CBlockIndex* blockindex)
 
 double GetPoWMHashPS()
 {
+if(pindexBest->nHeight <= FORK_BLOCK) {
     if (pindexBest->nHeight >= LAST_POW_BLOCK)
         return 0;
+} else {
+    if (pindexBest->nHeight >= FORK_LAST_POW_BLOCK)
+        return 0;
+}
 
     int nPoWInterval = 72;
     int64_t nTargetSpacingWorkMin = 30, nTargetSpacingWork = 30;

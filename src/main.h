@@ -28,6 +28,8 @@ class CRequestTracker;
 class CNode;
 
 static const int LAST_POW_BLOCK = 450010;
+static const int FORK_BLOCK = 200000;
+static const int FORK_LAST_POW_BLOCK = 200000;
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;

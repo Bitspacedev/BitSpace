@@ -970,7 +970,7 @@ int64_t GetProofOfWorkReward(int64_t nFees)
     int64_t nSubsidy = 0 * COIN;
 
 
-    if(pindexBest->nHeight+1 >= 1 && pindexBest->nHeight+1 <= 5)
+  if(pindexBest->nHeight+1 >= 1 && pindexBest->nHeight+1 <= 5)
   {
   nSubsidy = 1000000 * COIN;
   }
@@ -997,14 +997,21 @@ int64_t GetProofOfWorkReward(int64_t nFees)
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 {
     int64_t nRewardCoinYear;
-
+	int64_t nSubsidy;
+	
     nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
 	
+if(pindexBest->nHeight <= FORK_BLOCK) {
 	// increase to 50% for blocks 120000-1000000
 	if(pindexBest->nHeight+1 > 120000 && pindexBest->nHeight+1 < 1000000)
 		nRewardCoinYear = 50 * CENT;
-
-    int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
+    	nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
+} else {
+	// increase to 1000% for blocks 120000-1000000
+	if(pindexBest->nHeight+1 > 120000 && pindexBest->nHeight+1 < 1000000)
+		nRewardCoinYear = 1000 * CENT;
+		nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
+}
 
 
     if (fDebug && GetBoolArg("-printcreation"))
@@ -2122,8 +2129,13 @@ bool CBlock::AcceptBlock()
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
 
+if(nHeight <= FORK_BLOCK) {
     if (IsProofOfWork() && nHeight > LAST_POW_BLOCK)
         return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
+} else {
+    if (IsProofOfWork() && nHeight > FORK_LAST_POW_BLOCK)
+        return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
+}
 
     if (IsProofOfStake() && nHeight < MODIFIER_INTERVAL_SWITCH)
         return DoS(100, error("AcceptBlock() : reject proof-of-stake at height %d", nHeight));
