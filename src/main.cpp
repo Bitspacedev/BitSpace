@@ -999,16 +999,18 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
     int64_t nRewardCoinYear;
 	int64_t nSubsidy;
 	
+	// Base APR 10%
     nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
-	
+    nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
+
 if(pindexBest->nHeight <= FORK_BLOCK) {
 	// increase to 50% for blocks 120000-1000000
 	if(pindexBest->nHeight+1 > 120000 && pindexBest->nHeight+1 < 1000000)
 		nRewardCoinYear = 50 * CENT;
     	nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 } else {
-	// increase to 1000% for blocks 120000-1000000
-	if(pindexBest->nHeight+1 > 120000 && pindexBest->nHeight+1 < 1000000)
+	// increase to 1000% for blocks FORK_BLOCK-1000000
+	if(pindexBest->nHeight+1 > FORK_BLOCK && pindexBest->nHeight+1 < 1000000)
 		nRewardCoinYear = 1000 * CENT;
 		nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 }
