@@ -36,14 +36,25 @@ win32 {
   MINIUPNPC_LIB_PATH=C:/devel/miniupnpc-1.9
 }
 
+macx {
+ BOOST_INCLUDE_PATH=/usr/local/Cellar/boost\@1.57/1.57.0/include
+ BOOST_LIB_PATH=/usr/local/Cellar/boost\@1.57/1.57.0/lib
+ BDB_INCLUDE_PATH=/usr/local/Cellar/berkeley-db\@4/4.8.30/include
+ BDB_LIB_PATH=/usr/local/Cellar/berkeley-db\@4/4.8.30/lib
+ OPENSSL_INCLUDE_PATH=/usr/local/opt/openssl/include
+ OPENSSL_LIB_PATH=/usr/local/opt/openssl/lib
+ MINIUPNPC_INCLUDE_PATH=/usr/local/Cellar/miniupnpc/2.0.20180410/include
+ MINIUPNPC_LIB_PATH=/usr/local/Cellar/miniupnpc/2.0.20180410/lib
+}
+
 OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
 
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
-    # Mac: compile for maximum compatibility (10.5, 32-bit)
-    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.5 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.5.sdk
+    # Mac: compile for 10.13, 64bit
+    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.13 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
 
     !windows:!macx {
         # Linux: static link
@@ -124,7 +135,7 @@ SOURCES += src/txdb-leveldb.cpp \
     src/skein.c
 !win32 {
     # we use QMAKE_CXXFLAGS_RELEASE even without RELEASE=1 because we use RELEASE to indicate linking preferences not -O preferences
-    #genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a
+    genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a
 } else {
     # make an educated guess about what the ranlib command is called
     isEmpty(QMAKE_RANLIB) {
@@ -458,12 +469,12 @@ windows:!contains(MINGW_THREAD_BUGFIX, 0) {
     LIBS += -lrt
 }
 
-macx:HEADERS += src/qt/macdockiconhandler.h
-macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm
+macx:HEADERS += src/qt/macdockiconhandler.h src/qt/macnotificationhandler.h
+macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm src/qt/macnotificationhandler.mm
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
 macx:ICON = src/qt/res/icons/bitspace.icns
-macx:TARGET = "bitspace-Qt"
+macx:TARGET = "bitspace"
 macx:QMAKE_CFLAGS_THREAD += -pthread
 macx:QMAKE_LFLAGS_THREAD += -pthread
 macx:QMAKE_CXXFLAGS_THREAD += -pthread
